@@ -1,7 +1,6 @@
-import seaborn
-import numpy, scipy, matplotlib.pyplot as plt, pandas, librosa, IPython.display as ipd, urllib, os.path
-
-x,fs = librosa.load('C4.wav',sr=44100)
+import numpy,matplotlib.pyplot as plt, librosa, IPython.display as ipd, urllib, os.path
+import scipy
+x,fs = librosa.load('E4.wav',sr=44100)
 #ipd.Audio(x, rate=fs)
 #print x.shape
 
