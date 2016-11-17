@@ -1,6 +1,10 @@
 import numpy,matplotlib.pyplot as plt, librosa, IPython.display as ipd, urllib, os.path
 import scipy
-x,fs = librosa.load('E4.wav',sr=44100)
+import sys
+
+filename = sys.argv[1]
+x,fs = librosa.load(filename,sr=44100)
+
 #ipd.Audio(x, rate=fs)
 #print x.shape
 
