@@ -1,0 +1,13 @@
+python spectrum.py E1.wav F1.wav F#1.wav G1.wav G#1.wav A1.wav A#1.wav B1.wav
+
+python spectrum.py C2.wav C#2.wav D2.wav D#2.wav E2.wav F2.wav F#2.wav G2.wav G#2.wav A2.wav A#2.wav B2.wav
+
+python spectrum.py C3.wav C#3.wav D3.wav D#3.wav E3.wav F3.wav F#3.wav G3.wav G#3.wav A3.wav A#3.wav B3.wav
+
+python spectrum.py C4.wav C#4.wav D4.wav D#4.wav E4.wav F4.wav F#4.wav G4.wav G#4.wav A4.wav A#4.wav B4.wav 
+
+python spectrum.py C5.wav C#5.wav D5.wav D#5.wav E5.wav F5.wav F#5.wav G5.wav G#5.wav A5.wav A#5.wav B5.wav
+
+python spectrum.py C6.wav C#6.wav D6.wav D#6.wav E6.wav F6.wav F#6.wav G6.wav G#6.wav A6.wav A#6.wav B6.wav 
+
+
