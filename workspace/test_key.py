@@ -1,18 +1,24 @@
-import numpy
-import librosa
+import numpy 
+from numpy import fft
+from scipy.io.wavfile import read
+from pylab import *
 import scipy
 import sys, os.path
 import operator
-peaks = dict()
+
 sample_rate = 44100
 frame_size = 4096
-noise_threshold = 0.05
+noise_threshold = 0.1
 max_frequency = 2000
 f = open("test_key.txt","w")
 for ai in range(1, len(sys.argv)):
-    x,fs = librosa.load(sys.argv[ai], sr=44100)
-    X = scipy.fft(x[10000:14096])
+    peaks = dict()
+    fs, x = read(sys.argv[1]) 
+    print x[0:44100]
+    print fs
+    X = numpy.fft.fft(x[0:4096])
     X_mag = numpy.absolute(X)
+
     f = numpy.linspace(0, fs, 4096)
 
     maxAmp = X_mag.max()   #max amplitude value
