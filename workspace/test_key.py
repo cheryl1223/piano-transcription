@@ -2,13 +2,14 @@ import numpy
 from numpy import fft
 from scipy.io.wavfile import read
 from pylab import *
+
 import scipy
 import sys, os.path
 import operator
-
+import matplotlib.pyplot as plt
 sample_rate = 44100
 frame_size = 4096
-noise_threshold = 0.1
+noise_threshold = 0.2
 max_frequency = 2000
 f = open("test_key.txt","w")
 for ai in range(1, len(sys.argv)):
@@ -17,10 +18,12 @@ for ai in range(1, len(sys.argv)):
     print x[0:44100]
     print fs
     X = numpy.fft.fft(x[0:4096])
-    X_mag = numpy.absolute(X)
+    X_mag = numpy.absolute(X)*numpy.absolute(X)
 
     f = numpy.linspace(0, fs, 4096)
-
+    plt.plot(f[:1000], X_mag[:1000])
+    plt.xlabel('Frequency (Hz)')
+    plt.show()
     maxAmp = X_mag.max()   #max amplitude value
     for i in range(2,4095):
         if f[i] < max_frequency:
@@ -30,6 +33,6 @@ for ai in range(1, len(sys.argv)):
         else:
             break    
     
-    sorted_peaks = sorted(peaks.items(), key=operator.itemgetter(0))
+    sorted_peaks = sorted(peaks.items(), key=operator.itemgetter(0))[0:4]
     print sorted_peaks
 
