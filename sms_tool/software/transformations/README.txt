@@ -1,1 +1,0 @@
-This directory includes all the software to transform sounds using the models
