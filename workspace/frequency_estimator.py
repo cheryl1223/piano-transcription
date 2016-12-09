@@ -28,14 +28,13 @@ def freq_from_autocorr(signal, fs):
     # reversed in time), and throw away the negative lags
 
     signal -= mean(signal)  # Remove DC offset
-    signal = signal[0:1024]
+
+
+    signal = signal[0:2048]
     corr = fftconvolve(signal, signal[::-1], mode='full')
     corr = corr[len(corr)/2:]
-    print corr[0:1024]
-    # Find the first low point
     d = diff(corr)
     start = find(d > 0.001)[0]
-
     f = numpy.linspace(0, len(corr),len(corr))
     plot(f,corr)
     show()

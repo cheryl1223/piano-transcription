@@ -1,6 +1,6 @@
 from midiutil.MidiFile import MIDIFile
-from highest_peak_method import *
-from first_peaks_method import *
+from method1 import *
+from method2 import *
 import math
 #get duration and tempo from onsets file
 f = open("onsets.txt","r")
