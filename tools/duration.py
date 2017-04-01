@@ -12,7 +12,7 @@ for line in f:
 f.close()
 
 duration = list()
-for i in range(len(onsets)-1):
+for i in range(len(onsets)-2):
     duration.append(onsets[i+1]-onsets[i])
 
 min_duration = min(duration)

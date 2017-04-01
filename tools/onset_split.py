@@ -1,11 +1,6 @@
 import sys
 import wave
 import os
-import sys, csv
-from essentia import *
-from essentia.standard import *
-from pylab import *
-from numpy import *
 
 class OnsetFrameSplitter(object):
     """
@@ -22,34 +17,13 @@ class OnsetFrameSplitter(object):
             Splits a music file into onset frames.
         """
         print 'Start to detect onsets...'
-        onsets_output_file = "onsets.txt"
-
-        audio = MonoLoader(filename = self.music_file)()
-        od = OnsetDetection(method = 'complex')
-        w = Windowing(type = 'hann')
-        fft = FFT() 
-        c2p = CartesianToPolar() 
-        pool = Pool()
-
-        for frame in FrameGenerator(audio, frameSize = 1024, hopSize = 512):
-            mag, phase, = c2p(fft(w(frame)))
-            pool.add('features.complex', od(mag, phase))
-
-        onsets = Onsets()
-        onsets_complex = onsets(array([ pool['features.complex'] ]), [ 1 ])
-        onsets_complex = onsets_complex.tolist()
-
-        if self.verbose:
-            print 'onsets: '
-            for o in onsets_complex:
-                print o
-        f = open('onsets.txt','w')
-        for i in range(len(onsets_complex)):
-            temp = onsets_complex[i]
-            f.write("%s\n"%str(temp))
+        os.system("OnsetDetector single %s -o onsets.txt"%music_file)
+        f = open("onsets.txt","r")
+        onsets_complex = []
+        for line in f:
+            line = line.rstrip('\n')
+            onsets_complex.append(float(line))
         f.close()
-        print 'Start to split the file into onsets...'
-
         # Reading in the music wave and getting parameters.
         input_music_wave = wave.open(self.music_file, "rb")
         nframes = input_music_wave.getnframes()
@@ -61,9 +35,6 @@ class OnsetFrameSplitter(object):
             print "nframes: %d" % (nframes,)
             print "frame rate: %d " % (framerate,)
             print "duration: %f seconds" % (duration,)
-
-        onsets_complex.append(duration)
-        onsets_complex[0] = 0.0
 
         if not os.path.exists(self.output_directory):
             os.makedirs(self.output_directory)
