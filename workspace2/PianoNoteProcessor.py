@@ -1,35 +1,9 @@
-from __future__ import absolute_import, division, print_function
-
-import numpy as np
 
 from madmom.features.onsets import peak_picking, PeakPickingProcessor
 from madmom.processors import SequentialProcessor, ParallelProcessor
 from madmom.utils import suppress_warnings, combine_events
 
 class PianoNoteProcessor(SequentialProcessor):
-    """
-    Processor to get a (piano) note activation function from a RNN.
-
-    Examples
-    --------
-    Create a RNNPianoNoteProcessor and pass a file through the processor to
-    obtain a note onset activation function (sampled with 100 frames per
-    second).
-
-    >>> proc = RNNPianoNoteProcessor()
-    >>> proc  # doctest: +ELLIPSIS
-    <madmom.features.notes.RNNPianoNoteProcessor object at 0x...>
-    >>> act = proc('tests/data/audio/sample.wav')
-    >>> act.shape
-    (281, 88)
-    >>> act  # doctest: +NORMALIZE_WHITESPACE +ELLIPSIS
-    array([[-0.00014,  0.0002 , ..., -0.     ,  0.     ],
-           [ 0.00008,  0.0001 , ...,  0.00006, -0.00001],
-           ...,
-           [-0.00005, -0.00011, ...,  0.00005, -0.00001],
-           [-0.00017,  0.00002, ...,  0.00009, -0.00009]], dtype=float32)
-
-    """
 
     def __init__(self, **kwargs):
         # pylint: disable=unused-argument
@@ -57,11 +31,4 @@ class PianoNoteProcessor(SequentialProcessor):
             multi.append(SequentialProcessor((frames, stft, filt, spec, diff)))
         # stack the features and processes everything sequentially
         pre_processor = SequentialProcessor((sig, multi, np.hstack))
-	print (pre_processor.shape)
-	"""
-        # process the pre-processed signal with a NN
-        nn = NeuralNetwork.load(NOTES_BRNN[0])
 
-        # instantiate a SequentialProcessor
-        super(RNNPianoNoteProcessor, self).__init__((pre_processor, nn))
-	"""
