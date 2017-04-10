@@ -1,9 +1,0 @@
-{
-    "layer": 3,
-    "unit": 150,
-    "dropout": 0.0,
-    "activation": "relu",
-    "optimizer": "sgd",
-    "threshold": 0.5,
-    "epoch": 100
-}
