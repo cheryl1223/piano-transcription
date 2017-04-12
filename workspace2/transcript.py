@@ -18,6 +18,7 @@ def getDuration(onsets):
 
 
 def main():
+    os.system("OnsetDetector single %s -o onsets.txt"%sys.argv[1])
     onsets = np.loadtxt("onsets.txt")
     frames = np.loadtxt("result.txt")
     duration,bpm = getDuration(onsets = onsets)
@@ -33,7 +34,8 @@ def main():
     for i in range(len(duration)):
         midi_notes = []
         frame = int(onsets[i]*100)
-        print (frames.shape[1])
+        if frame > frames.shape[0]:
+            break
         for j in range(frames.shape[1]):
             if frames[frame][j] == 1:
                 midi_notes.append(j+21)

@@ -43,7 +43,7 @@ def main():
     proc = PianoNoteProcessor()
     act = proc(sys.argv[1])
     filename = sys.argv[1].split(".")[0]
-    np.savetxt('%s.txt'%filename,act,fmt='%.4f')
+    np.savetxt('%s_transform.txt'%filename,act,fmt='%.4f')
 
 if __name__ == '__main__':
     main()

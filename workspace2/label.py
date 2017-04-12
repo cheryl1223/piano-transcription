@@ -24,20 +24,23 @@ def main():
     f = open("%s.txt"%filename)#txt
     frames = frame(wav = sys.argv[1])#wav
     labels = np.zeros((frames.shape[0],88),dtype = int)
-
+    
     n = 0
     for line in f:
-        if n != 0:
-            x = line.split('\n')
-            info = x[0].split('\t')
-            onset = float(info[0])
-            offset = float(info[1])
-            midinote = int(info[2])
-            on_frame = floor(onset/0.01)
-            off_frame = floor(offset/0.01)
-            note = midinote-21
-            for i in range(on_frame,off_frame):
-                labels[i][note] = 1
+        if line.strip():
+            if n != 0:
+                x = line.strip()
+                info = x.split('\t')
+                print (info)
+                onset = float(info[0])
+                offset = float(info[1])
+                midinote = int(info[2])
+                #print (info[0])
+                on_frame = floor(onset/0.01)
+                off_frame = floor(offset/0.01)
+                note = midinote-21
+                for i in range(on_frame,off_frame):
+                    labels[i][note] = 1
         n=n+1
     np.savetxt('%s_labels.txt'%filename, labels, fmt = '%s')
 
