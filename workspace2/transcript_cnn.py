@@ -4,11 +4,11 @@ import numpy as np
 import sys, os
 import matplotlib.pyplot as plt
 from operator import itemgetter, attrgetter  
+from math import floor
 
 
-
-p_onset = 0.9
-p_offset = 0.3
+p_onset = 0.15
+p_offset = 0.05
 
 def getDuration(onsets):
     #get duration and tempo from onsets file
@@ -25,42 +25,32 @@ def getDuration(onsets):
 
 
 def main():
-    os.system("OnsetDetector single %s -o onsets.txt"%sys.argv[1])
-    onsets = np.loadtxt("onsets.txt")
     frames = np.loadtxt("result.txt")
     notes = []
-    for i in range(onsets.shape[0]):
-        onsets[i] = int(onsets[i]*100)
-        #plt.axvline(x=onsets[i],color = 'r')
 
 
     
     for i in range(frames.shape[0]):
         for j in range(frames.shape[1]):
-            if frames[i][j] >= p_onset:
+            if frames[i][j] >= p_onset and frames[i][j] > frames[i-1][j]:
                 frames[i][j] = 1
 
-
-    for i in onsets:
-        i = int(i)
+    for i in range(frames.shape[0]):
         for n in range(88):
-            if (frames[i][n] == 1 or frames[i-1][n]==1 \
-                or frames[i+1][n]==1 or frames[i+2][n]==1 or frames[i-2][n]==1\
-                or frames[i+3][n]==1 or frames[i-3][n]==1): 
+            if frames[i][n] == 1 and frames[i-1][n]!= 1:
                 x = i
-                while(frames[x][n] >p_offset):
+                while (x < frames.shape[0] and frames[x][n] > p_offset):
                     x = x+1
-                if (x-i>5):
-                    on_time = float(i/100)
-                    off_time = float(x/100)
-
+                if x-i > 2:
+                    on_time = float(i/20)
+                    off_time = float(x/20)
                     notes.append((n+21, on_time, off_time))
 
-    '''
+
+    
     plt.imshow(frames.transpose())
     plt.show()
-    '''
-
+    
 
     #notes = notes[np.argsort(notes[:,2])]
     notes = sorted(notes, key=itemgetter(2,0))
@@ -72,7 +62,7 @@ def main():
         if notes[i+1][0] != notes[i][0]:
             notes_new.append(notes[i+1])
 
-    print (len(notes_new))
+    print (notes_new)
 
 
 
